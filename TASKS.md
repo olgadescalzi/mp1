@@ -20,19 +20,24 @@ que copia los CSV a Parquet sin limpiar, para tener el contrato de AGENTS.md fun
 
 ## Iteración 1 · Datos limpios
 
-- [ ] 1. Completar y aprobar las especificaciones del análisis de las 8:00, las métricas, las salidas y los criterios verificables; completar diseño y arquitectura.
-- [ ] 2. Crear la carga de CSV y el pipeline inicial que genere las tablas Parquet acordadas y cumpla los esquemas mínimos (CD1–CD5).
-- [ ] 3. Limpiar el catálogo de estaciones: coordenadas, altitud, distrito y servicio según los requisitos (R4–R7; CA4–CA7).
-- [ ] 4. Limpiar los viajes: deduplicación, validez, tipos de bici y corrección de cambios de hora (R1–R3; CA1–CA3; CD1–CD4).
-- [ ] 5. Limpiar las lecturas de estado: excluir estaciones cerradas, ocupaciones imposibles y sensores bloqueados (R8–R10; CA8–CA9; CD5).
-- [ ] 6. Limpiar abonados y generar las tablas auxiliares que se acuerden en las especificaciones (R11; CA10).
+- [ ] 1. Crear la salida base del pipeline en Parquet con las columnas mínimas del contrato del profesorado.
+- [ ] 2. Limpiar el catálogo de estaciones: corregir coordenadas y altitudes, asignar distrito desde el barrio y marcar estaciones fuera de servicio (Datos R4–R7, CA4–CA7).
+- [ ] 3. Limpiar viajes: conservar una fila por viaje, excluir los inválidos y normalizar `tipo_bici` y fechas para cumplir el contrato (Datos R1–R2, CA1–CA2, CD1–CD4).
+- [ ] 4. Corregir los viajes afectados por los dos cambios de hora y verificar su duración y conservación (Datos R3, CA3, CD3).
+- [ ] 5. Limpiar las lecturas de estado: excluir estaciones cerradas, lecturas que excedan la capacidad y sensores bloqueados (Datos R8–R10, CA8–CA9, CD5).
+- [ ] 6. Limpiar los datos de abonados: convertir el año 1900 en nulo y normalizar el género vacío (Datos R11, CA10).
 
 ## Iteración 2 · Métricas
 
-- [ ] 7. Calcular las bicis disponibles a las 8:00 y la estación con más bicis por día laborable, conforme a las decisiones aprobadas en la tarea 1.
-- [ ] 8. Calcular las métricas de viajes acordadas: viajes válidos y estimados, promedio por día laborable, proporción por tipo de bici y viajes corregidos por cambio de hora.
+- [ ] 7. Calcular el total de bicicletas a partir de las lecturas de estado (Métricas §5).
+- [ ] 8. Calcular el total de viajes válidos con la definición de Datos R1 y el factor de expansión de la muestra del 5 %.
+- [ ] 9. Calcular la distribución porcentual de viajes por tipo de bicicleta (Métricas §5).
+- [ ] 10. Calcular el número de viajes corregidos por cambios de hora (Métricas §5, Datos R3).
+- [ ] 11. Calcular los viajes estimados por día laborable, dividiendo el total estimado entre los días laborables del periodo (Métricas §5, R7).
 
 ## Iteración 3 · Cuadro de mando
 
-- [ ] 9. Implementar el cuadro de mando en Streamlit con el análisis de las 8:00 y las métricas, siguiendo el diseño aprobado.
-- [ ] 10. Ejecutar la validación final de pipeline, tests aplicables y trazabilidad de criterios.
+- [ ] 12. Crear la aplicación Streamlit que lea las tablas procesadas y arranque con el comando establecido en el contrato del profesorado.
+- [ ] 13. Mostrar el total de bicicletas, los viajes válidos, el porcentaje por tipo de bicicleta y los viajes corregidos por cambios de hora (Cuadro de mando §5).
+
+> **Pendiente de concreción del equipo, no incluido como tarea implementable:** definir cómo se elige la lectura que representa las 08:00 y cómo se resuelven empates o días sin datos para responder qué estación tiene más bicicletas cada día laborable. También faltan los esquemas y reglas para las tablas procesadas adicionales y las decisiones de diseño de pantallas, filtros y casos límite.
