@@ -5,13 +5,10 @@
 
 ## 1. Objetivo
 
-
-Una o dos frases: para quién es el cuadro de mando y qué decisiones le ayuda a tomar.
-Pista: no es "ver datos", es decidir algo concreto. ¿Qué decidirá Aina Puig cada lunes?
+El cuadro de mando es para el data analyst y necesito ver los datos de las bicis de Barcelona y donde hay mas bicicletas a las 8 de la mañana para ir a trabajar. ¿cuantas bicis hay?¿En que estacion hay mas bicis a las 8 de la mañana cada dia de lunes a viernes?
 
 
 ## 2. Usuarios y preguntas
-
 
 - Usuario: quién lo usa, cuándo y qué sabe (¿es técnico? ¿cuánto tiempo tiene?).
 - Preguntas: las del encargo, numeradas (P1, P2…) y concretadas. Cada pantalla del cuadro
@@ -20,14 +17,14 @@ Pista: no es "ver datos", es decidir algo concreto. ¿Qué decidirá Aina Puig c
 
 ## 3. Entradas
 
-
+<!-- 
 Los ficheros de data/raw/ y los problemas de calidad que encontréis con notebooks/exploracion.ipynb.
 Sed concretos: cuántas filas, qué columna, qué valor raro y cuántas veces aparece.
 Hito de la sesión 4: al menos seis problemas documentados.
 
 Ejemplo de fila:
 | `viajes.csv` (N filas) | Un viaje de la muestra del 5 % | N `viaje_id` repetidos; … |
-
+-->
 
 | Fichero | Una fila es | Problemas encontrados |
 | --- | --- | --- |
@@ -37,11 +34,11 @@ Ejemplo de fila:
 |barrios.csv |barrios de destino  |barrios tiene discrepancias |
 
 ## 4. Salidas
-
+<!--
 Qué genera el pipeline en data/processed/ y qué muestra la app.
 Como mínimo, las tres tablas del contrato de AGENTS.md §3. Añadid las columnas derivadas
 o tablas extra que necesitéis para las métricas (p. ej. fecha, hora, laborable…).
-
+-->
 
 - `data/processed/estaciones.parquet`, `viajes.parquet` y `estado.parquet` con el contrato de `AGENTS.md`
 - `data/processed/abonados.parquet`, `barrios.parquet`, `distritos.parquet`, `festivos.parquet`, `meteo.parquet`, `redistribucion` con el contrato de `AGENTS.md`
@@ -49,13 +46,13 @@ o tablas extra que necesitéis para las métricas (p. ej. fecha, hora, laborable
 
 ## 5. Requisitos
 
-
+<!--
 Reglas numeradas (R1, R2…), cada una verificable y sin ambigüedad. Separadlas en bloques.
 Cada problema de la sección 3 debería tener un requisito que diga qué se hace con él.
+-->
 
-Ejemplos de forma:
 - R1. Un viaje aparece una sola vez: si un viaje_id se repite, se conserva una fila.
-- R7. Viajes por día laborable = viajes estimados en días laborables / número de días laborables. Laborable = …
+- R7. Viajes por día laborable = viajes estimados en días laborables / número de días laborables. Laborable = lunes, martes, miercoles, jueves, viernes
 
 
 **Datos**
@@ -73,9 +70,18 @@ Ejemplos de forma:
 - R11. En abonados, el año 1900 significa "desconocido" (nulo) y un género vacío es `no_indicado`.
 
 **Métricas**
+- bicis totales: suma todas las bicis
+- viajes validos= sumar total de viajes y restar si sus estaciones de origen y destino no existen en el catálogo, restar si la bici no se devolvió, restar si la bici aparece una sola vez y restar si la duracion total no es menos de 180 minutos.
+- electricas divididas entre mecanicas 
+- cuantos viajes han sido afectados por el cambio de hora? Suma total de viajes corregidos (+60 min el 26-oct-2025, −60 min el 29-mar-2026)
 
 
 **Cuadro de mando**
+- mostrar numero total de bicis 
+- suma total viajes validos si sus estaciones de origen y destino existen en el catálogo, la bici se devolvió, aparece una sola vez y dura entre 1 y 180 minutos 
+- electricas o mecanicas: grafico de quesito mostrando porcentajes.
+- Viajes afectados por los cambios de hora: mostrar numero de viajes corregidos 
+
 
 ## 6. Criterios de aceptación
 
